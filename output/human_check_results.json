@@ -1,0 +1,35 @@
+[
+  {
+    "app_id": 2,
+    "name": "HubSpot",
+    "method": "Manually fetched the two cited docs pages (developers.hubspot.com authentication overview + /ai-tools/mcp) via Tavily extract and read them directly.",
+    "fields_checked": [
+      "auth_methods",
+      "has_existing_mcp",
+      "buildability_verdict",
+      "self_serve_status"
+    ],
+    "verdict": "pass1_correct",
+    "notes": "auth_methods (OAuth2 for multi-account apps, static access token / developer API key for single-account) and has_existing_mcp (HubSpot ships two official MCP servers: a remote CRM MCP server and a local Developer MCP server) both confirmed directly against the docs. buildability_verdict=ready_today confirmed. self_serve_status=unknown is a defensible gap: the authentication page genuinely doesn't state whether creating a HubSpot developer account is free vs. gated, so 'unknown' was the honest answer rather than a guess."
+  },
+  {
+    "app_id": 6,
+    "name": "Podio",
+    "method": "Independently re-searched (narrower query than my first attempt, which initially missed the key page) and fetched progress.com's own 'Podio MCP Server Integration Guide' page directly.",
+    "fields_checked": [
+      "has_existing_mcp"
+    ],
+    "verdict": "pass1_wrong_caught_by_verification_loop",
+    "notes": "Pass 1 left has_existing_mcp as null/unknown. The automated verification loop's independently-targeted search found progress.com's own official 'Podio MCP Server' docs (server live at mcp.podio.com, 22 tools, beta) and correctly corrected the field to true. My own first manual check (looser query) also missed it initially, which is itself a useful data point: evidence-gathering precision matters as much as the model judging it."
+  },
+  {
+    "app_id": 11,
+    "name": "Zendesk",
+    "method": "Manually searched and read the top unofficial/official MCP-related sources (mcpservers.org, glama.ai, eesel.ai, and Zendesk's own support.zendesk.com MCP client article).",
+    "fields_checked": [
+      "has_existing_mcp"
+    ],
+    "verdict": "pass1_wrong_and_verification_loop_also_wrong",
+    "notes": "Both pass 1 and the automated verification loop said has_existing_mcp=true, but neither distinguished an MCP server (exposes Zendesk's API to outside agents, which is what 'buildable as an agent toolkit' actually needs) from an MCP client (lets Zendesk's own workflow builder call out to external MCP tools, which is what support.zendesk.com's 'Using the Zendesk MCP client' article describes). Zendesk has no official MCP server; only unofficial third-party ones exist (e.g. Cotlet, offering a 7-day free trial). Corrected has_existing_mcp to false in final_results.json based on this human check, since the automated loop missed the client/server distinction. Logged as a known schema ambiguity."
+  }
+]

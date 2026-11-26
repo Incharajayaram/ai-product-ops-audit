@@ -1,0 +1,935 @@
+{
+  "sample_size": 23,
+  "total_population": 100,
+  "total_field_checks": 115,
+  "confirmed": 93,
+  "contradicted": 7,
+  "not_addressed": 15,
+  "pass1_field_accuracy_on_sample": 0.809,
+  "apps_pass1_wrong_or_partial": [
+    {
+      "app_id": 6,
+      "name": "Podio",
+      "verdict": "pass1_partially_wrong"
+    },
+    {
+      "app_id": 11,
+      "name": "Zendesk",
+      "verdict": "pass1_partially_wrong"
+    },
+    {
+      "app_id": 44,
+      "name": "Salesforce Commerce Cloud",
+      "verdict": "pass1_partially_wrong"
+    },
+    {
+      "app_id": 50,
+      "name": "fanbasis",
+      "verdict": "pass1_partially_wrong"
+    },
+    {
+      "app_id": 53,
+      "name": "Ahrefs",
+      "verdict": "pass1_partially_wrong"
+    },
+    {
+      "app_id": 58,
+      "name": "Sherlock",
+      "verdict": "pass1_partially_wrong"
+    },
+    {
+      "app_id": 66,
+      "name": "Neo4j",
+      "verdict": "pass1_partially_wrong"
+    }
+  ],
+  "corrections_applied": [
+    {
+      "app_id": 6,
+      "name": "Podio",
+      "field": "has_existing_mcp",
+      "old_value": null,
+      "new_value": true
+    },
+    {
+      "app_id": 11,
+      "name": "Zendesk",
+      "field": "self_serve_status",
+      "old_value": "unknown",
+      "new_value": "gated_paid_plan"
+    },
+    {
+      "app_id": 44,
+      "name": "Salesforce Commerce Cloud",
+      "field": "has_existing_mcp",
+      "old_value": null,
+      "new_value": true
+    },
+    {
+      "app_id": 44,
+      "name": "Salesforce Commerce Cloud",
+      "field": "buildability_verdict",
+      "old_value": "unknown",
+      "new_value": "ready_today"
+    },
+    {
+      "app_id": 53,
+      "name": "Ahrefs",
+      "field": "self_serve_status",
+      "old_value": "gated_approval",
+      "new_value": "gated_paid_plan"
+    },
+    {
+      "app_id": 58,
+      "name": "Sherlock",
+      "field": "has_existing_mcp",
+      "old_value": true,
+      "new_value": false
+    },
+    {
+      "app_id": 66,
+      "name": "Neo4j",
+      "field": "self_serve_status",
+      "old_value": "unknown",
+      "new_value": "self_serve_free"
+    }
+  ],
+  "judgements": [
+    {
+      "app_id": 2,
+      "name": "HubSpot",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms OAuth and private app tokens/API keys/tokens for HubSpot APIs."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not speak to the self-serve tier status of HubSpot itself."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that HubSpot ships official MCP servers."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that HubSpot APIs and MCP servers are available and ready to use."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms a robust REST API surface alongside their remote CRM MCP server and local Developer MCP."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "Some unrelated sources in the search results discussed AthenaHQ, HubSpot AEO, or Slack API, but the primary target app (HubSpot CRM) was clearly addressed by Scalekit and Tavily knowledge.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/hubspot-mcp-vs-api",
+        "https://deepsmith.ai/blog/athenahq-vs-hubspot-aeo-for-data-access",
+        "https://tavily.com/knowledge/company/7hyujTAby2IJ",
+        "https://aitoolsatlas.ai/tools/slack-api/free-vs-paid"
+      ]
+    },
+    {
+      "app_id": 6,
+      "name": "Podio",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The fresh evidence confirms that the Podio API uses OAuth2 with multiple supported flows including server-side and app authentication."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The FAQ explicitly states that the Podio API is available for both free and paid accounts with full access."
+      },
+      "has_existing_mcp": {
+        "verdict": "contradicted",
+        "corrected_value": true,
+        "explanation": "Fresh evidence includes a dedicated 'Podio MCP Server Integration Guide' from Progress (the owner of Podio), showing an existing official MCP server integration."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The API is fully documented and publicly accessible, making it ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms OAuth2 support and details example CRUD endpoints like user profiles, workspaces, apps, and items."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "Pass1 missed the existing MCP server implementation, but was otherwise accurate on authentication and API readiness.",
+      "fresh_evidence_urls": [
+        "https://developers.podio.com/index/faq",
+        "https://publicapi.dev/podio-api",
+        "https://www.progress.com/podio/documentation/using-podio/ai-and-mcp/podio-mcp-server-integration-guide",
+        "https://developers.podio.com/authentication/server_side"
+      ]
+    },
+    {
+      "app_id": 9,
+      "name": "Copper",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The fresh source about Copper's MCP server notes OAuth 2.0 Authorization Server Metadata, and the standard Copper CRM API typically supports API keys / tokens and OAuth."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "The fresh evidence does not discuss the self-serve pricing tiers or signup model for Copper CRM."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The fresh source explicitly details an undocumented Model Context Protocol server operated by Copper at mcp.getcopper.com."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Since an MCP server exists and is hosted at mcp.getcopper.com, building on it is ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "not_addressed",
+        "note": "The fresh evidence mentions the Copper MCP server endpoint exists, but doesn't detail the full REST CRUD surface of People, Companies, etc., so we leave the verdict as not_addressed while keeping pass1's summary intact."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "The fresh evidence includes an entry specifically for Copper (copper.com) and its MCP server at mcp.getcopper.com, confirming pass1's finding on existing MCP.",
+      "fresh_evidence_urls": [
+        "https://apis.io/apis/copper-banking/copper-mcp-server",
+        "https://www.scalekit.com/blog/wordpress-mcp-vs-api",
+        "https://apis.io/servers/renesas/renesas-web-data-api-docs-mcp",
+        "https://tavily.com/knowledge/company/BsmFX5zhBFit"
+      ]
+    },
+    {
+      "app_id": 11,
+      "name": "Zendesk",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms OAuth, API key, Basic, and Token authentication methods are associated with Zendesk's API and integrations."
+      },
+      "self_serve_status": {
+        "verdict": "contradicted",
+        "corrected_value": "gated_paid_plan",
+        "explanation": "Fresh evidence indicates Zendesk features (such as MCP Bridge and Client) are available on paid plans like Suite plans and Support Team/Growth and up."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms the existence of MCP capabilities including Zendesk Bridge, Swifteq MCP, open source servers, and the Zendesk MCP client."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms building or connecting via MCP and Zendesk APIs is ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms Zendesk's extensive REST API capabilities and integration endpoints."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "Self-serve status was updated to gated_paid_plan based on the requirement for paid Suite or Support tiers.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/zendesk-mcp-vs-api",
+        "https://www.eesel.ai/blog/zendesk-mcp-server",
+        "https://www.eesel.ai/blog/zendesk-mcp-client",
+        "https://support.zendesk.com/hc/en-us/articles/10497779528730-Using-the-Zendesk-MCP-client-to-access-MCP-tools-in-action-flows-and-advanced-action-flows"
+      ]
+    },
+    {
+      "app_id": 12,
+      "name": "Intercom",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both OAuth and Token (Bearer access token) are supported."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence from Macha confirms API access (and thus platform usage) is available on all plans including Essential/self-serve tiers."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms an official remote MCP server at mcp.intercom.com exists."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Official MCP server and REST API are fully available and ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Pass 1 summary accurately reflects the REST API and the official MCP server."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass 1 claims are fully supported by fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/intercom-mcp-vs-api",
+        "https://growthmethod.com/intercom-mcp-server",
+        "https://www.getmacha.com/blog/intercom-api-guide",
+        "https://www.intercom.com/integrations/connectors/intercom-mcp-server"
+      ]
+    },
+    {
+      "app_id": 14,
+      "name": "Front",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both API tokens (Bearer token) and OAuth are supported for authentication."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "The fresh evidence discusses pricing tiers (Starter, Professional, Enterprise) and API limits, but does not explicitly detail the self-serve signup or trial status structure."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Front has an existing MCP server in open beta hosted at mcp.frontapp.com/mcp."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms the MCP server and Core REST API are fully functional and available for building today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms Front provides a Core REST API and an MCP server covering conversations, contacts, comments, analytics, channels, and more."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "The fresh evidence strongly corroborates all claims made in pass1_claims.",
+      "fresh_evidence_urls": [
+        "https://www.getmacha.com/blog/how-to-use-the-front-api",
+        "https://www.scalekit.com/blog/front-mcp-vs-api",
+        "https://community.front.com/api-news-updates-40/the-front-mcp-server-is-here-beta-3712",
+        "https://help.front.com/en/articles/4883136"
+      ]
+    },
+    {
+      "app_id": 25,
+      "name": "Pumble",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms API key and token usage across official documentation and third-party specs."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "The fresh evidence discusses API keys and MCP integrations, but does not explicitly mention the workspace self-serve pricing/free tier status."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms the existence of an official Pumble MCP server."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The MCP server and APIs are active and ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence supports the description of HTTP requests, Swagger documentation, and operations covering messaging, channels, reactions, and workspace elements."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All claims are well-supported by the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://manufact.com/leaderboard/pumble",
+        "https://github.com/infralayers/pumble-mcp/blob/main/SPEC.md",
+        "https://pumble.com/help/integrations/automation-workflow-integrations/how-to-use-the-pumble-mcp-server",
+        "https://pumble.com/help/integrations/automation-workflow-integrations/api-keys-integration"
+      ]
+    },
+    {
+      "app_id": 30,
+      "name": "Vonage",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence from developer.vonage.com confirms that the API supports Basic authentication and JWT (Token)."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not explicitly discuss the self-serve signup or pricing tiers of the platform."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": true,
+        "explanation": "Fresh evidence from official announcements and YouTube confirms that Vonage has released official Model Context Protocol (MCP) servers."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": "ready_today",
+        "explanation": "Vonage provides extensive documentation, official SDKs, and ready-to-use APIs along with newly released MCP servers, making it fully ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms Vonage provides cloud communications APIs for voice, SMS, messaging, video, and verification."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are strongly supported by the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://apis.io/providers/vonage",
+        "https://developer.vonage.com/en/verify/concepts/authentication",
+        "https://www.youtube.com/watch?v=UOA1lLa9uLs",
+        "https://www.vonage.com/about-us/newsroom/press-releases/Vonage-Expands-Developer-Ecosystem-to-Accelerate-the-Next-Era-of-Enterprise-Digital-Transformation/19b6d04d-2cb0-41b7-a921-30a1cb95192a"
+      ]
+    },
+    {
+      "app_id": 34,
+      "name": "GoHighLevel",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both OAuth2 and API key (specifically Private Integration tokens/tokens acting as API keys) are supported authentication methods."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms it operates on gated or higher paid plans like the Agency Pro plan, aligning with pass1's gated_paid_plan verdict."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that HighLevel runs an official LeadConnector MCP server."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms a full REST API and official MCP server are available, making it ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms comprehensive REST API coverage for CRM, contacts, workflows, etc., via the services.leadconnectorhq.com endpoints."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are well-supported by the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://highlevelautomationteam.com/integrations/api-and-mcp",
+        "https://arslanautomates.com/blog/gohighlevel-api-guide",
+        "https://thefunnelroad.com/gohighlevel-api",
+        "https://ghldesk.com/gohighlevel-api"
+      ]
+    },
+    {
+      "app_id": 42,
+      "name": "WooCommerce",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Basic auth via consumer keys (consumer_key and consumer_secret) as well as API key headers and other methods like tokens/OAuth."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "WooCommerce is open source and freely available to download and use."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms the existence of community and official WooCommerce MCP servers."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "APIs and MCP servers are available and ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence corroborates a comprehensive REST API and multiple MCP implementations for managing products, orders, customers, and store settings."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims align well with the fresh documentation and MCP server listings.",
+      "fresh_evidence_urls": [
+        "https://apis.io/providers/woocommerce",
+        "https://glama.ai/mcp/servers/Claudia204/woocommerce-mcp-server",
+        "https://mcpservers.org/servers/sadrmanesh/woocommerce-mcp",
+        "https://woocommerce.com/document/w7s-mcp"
+      ]
+    },
+    {
+      "app_id": 44,
+      "name": "Salesforce Commerce Cloud",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms OAuth2 and Token (bearerAuth / JWT access tokens) are used."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh sources do not explicitly state the self-serve status or pricing plan availability."
+      },
+      "has_existing_mcp": {
+        "verdict": "contradicted",
+        "corrected_value": true,
+        "explanation": "Fresh evidence from developer.salesforce.com and Cequence AI Gateway mentions existing MCP offerings and tooling like the B2C MCP."
+      },
+      "buildability_verdict": {
+        "verdict": "contradicted",
+        "corrected_value": "ready_today",
+        "explanation": "Fresh documentation shows direct support, documentation, and existing integration patterns (including MCP availability), indicating the app is ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "The B2C Commerce API uses Shopper APIs and Admin APIs, leveraging JWT / bearer tokens for authorization."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "Pass1 missed existing MCP resources and buildability status, but correctly identified auth methods and the API surface.",
+      "fresh_evidence_urls": [
+        "https://apis.io/security/salesforce-commerce-cloud/salesforce-commerce-cloud-authentication",
+        "https://docs.aigateway.cequence.ai/docs/applications/ecommerce/salesforce-commerce-cloud-b2b",
+        "https://developer.salesforce.com/docs/commerce/commerce-api/guide/scapi-get-started.html",
+        "https://developer.salesforce.com/docs/commerce/commerce-api/guide/authorization.html"
+      ]
+    },
+    {
+      "app_id": 49,
+      "name": "Amazon Selling Partner",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that Login with Amazon (OAuth2) and AWS SigV4 are used for authentication."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms third-party developer API access involves subscription and usage fee structures (gated paid plan)."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": true,
+        "explanation": "Fresh GitHub discussion evidence indicates the existence of community or official MCP servers/bridges for the Selling Partner API."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence aligns with the need for multi-step authentication (developer registration, role selection, LWA, SigV4) making it possible with workarounds/proper setup."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "The API relies on REST endpoints, Login with Amazon, and AWS SigV4 request signing as described."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All initial claims were supported by the fresh evidence, including MCP references.",
+      "fresh_evidence_urls": [
+        "https://ppc.land/amazon-introduces-fees-for-third-party-developer-api-access-in-2026",
+        "https://developer-docs.amazon/sp-api/docs/connecting-to-the-selling-partner-api",
+        "https://agentcentral.to/blog/amazon-sp-api",
+        "https://github.com/amzn/selling-partner-api-models/discussions/4270"
+      ]
+    },
+    {
+      "app_id": 50,
+      "name": "fanbasis",
+      "auth_methods": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence sources discuss WordPress, Renesas, Slack, and Commas (Fanbasis Inc) technology stacks generally, but do not provide specific details on authentication methods for fanbasis."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not explicitly address the self-serve status of fanbasis."
+      },
+      "has_existing_mcp": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not speak to whether fanbasis has an existing MCP server."
+      },
+      "buildability_verdict": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not provide enough specific information about fanbasis's API to confirm or contradict the buildability verdict."
+      },
+      "api_surface_summary": {
+        "verdict": "not_addressed",
+        "note": "Fresh evidence sources pertain to different entities or unrelated topics and do not address fanbasis's API surface."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "The fresh evidence sources primarily covered unrelated products such as WordPress, Renesas, and Slack, with only a company registry snippet for Fanbasis Inc. (Commas) that lacked API documentation. Therefore, most fields are marked not_addressed.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/wordpress-mcp-vs-api",
+        "https://apis.io/servers/renesas/renesas-web-data-api-docs-mcp",
+        "https://aitoolsatlas.ai/tools/slack-api/free-vs-paid",
+        "https://tavily.com/knowledge/company/LJmfyOI51WwS"
+      ]
+    },
+    {
+      "app_id": 53,
+      "name": "Ahrefs",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both OAuth (via consent screen / OAuth2) and API key / MCP key usage."
+      },
+      "self_serve_status": {
+        "verdict": "contradicted",
+        "corrected_value": "gated_paid_plan",
+        "explanation": "Fresh evidence shows Ahrefs MCP and API access are available as part of standard self-serve paid tiers (Lite plan and above starting at $129/mo), rather than requiring special gated approval."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Ahrefs runs an official remote MCP server."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Official remote MCP server is currently live and ready to use."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence matches the pass1 summary regarding the retrieval-oriented capabilities and MCP server availability."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "Self-serve status was incorrect in pass1 as the tool is available directly on standard paid plans (Lite and above) without requiring manual approval.",
+      "fresh_evidence_urls": [
+        "https://www.get-ryze.ai/best-mcp-for-ahrefs",
+        "https://www.sprites.ai/blog/ahrefs-mcp",
+        "https://www.scalekit.com/blog/ahrefs-mcp-vs-api",
+        "https://ahrefs.com/seo-api"
+      ]
+    },
+    {
+      "app_id": 54,
+      "name": "MrScraper",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both API key and OAuth2 (OAuth 2.1) authentication methods are supported."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not speak to the self-serve tier status."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": true,
+        "explanation": "Fresh evidence shows an official MrScraper MCP server exists on GitHub."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms building or integrating with MrScraper is ready today, including an official MCP server."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence supports the capabilities and API surface description."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are consistent with the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://github.com/mrscraper-com/mrscraper-mcp",
+        "https://docs.mrscraper.com/docs/api/authentication",
+        "https://www.scalekit.com/connectors/mrscraper",
+        "https://docs.mrscraper.com"
+      ]
+    },
+    {
+      "app_id": 58,
+      "name": "Sherlock",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Sherlock requires no accounts or API keys and uses direct web requests against public URLs."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Sherlock is a free open-source tool."
+      },
+      "has_existing_mcp": {
+        "verdict": "contradicted",
+        "corrected_value": false,
+        "explanation": "The fresh evidence and search results show that while there are unrelated community projects or confusion with GitHub MCP servers, the primary Bellingcat toolkit documentation notes no official maintained API or built-in MCP server for Sherlock, and third-party repositories like sharlock-mcp belong to unrelated tools or are archived/unofficial."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Sherlock is readily usable locally today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Sherlock uses direct HTTP web requests to check username existence across various sites without using a formal traditional API."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "The fresh evidence confirms Sherlock itself is a free, no-auth command-line scraping utility, but contradicts the claim that it has an existing official MCP server.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/github-mcp-server-per-user-oauth",
+        "https://mcpverdict.com/mcp/servers/developer-tools/github",
+        "https://github.com/H4RR1SON/sherlock-mcp",
+        "https://github.com/bellingcat/toolkit/blob/main/gitbook/tools/sherlock/README.md"
+      ]
+    },
+    {
+      "app_id": 66,
+      "name": "Neo4j",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Basic auth (and API keys/tokens for services like Aura) are used."
+      },
+      "self_serve_status": {
+        "verdict": "contradicted",
+        "corrected_value": "self_serve_free",
+        "explanation": "Fresh evidence from APIs.io indicates a freemium model and self-serve signup with a free plan ($0 AuraDB Free)."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh documentation and guides confirm existing official Neo4j Model Context Protocol (MCP) integrations."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence shows MCP servers and drivers are readily available and ready to use."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "The API surface uses standard database drivers, REST APIs, and HTTP/Bolt connectivity."
+      },
+      "overall_verdict": "pass1_partially_wrong",
+      "notes": "Pass1 missed the self-serve status which is actually available as freemium/self_serve_free.",
+      "fresh_evidence_urls": [
+        "https://neo4j.com/developer/genai-ecosystem/model-context-protocol-mcp",
+        "https://stackoverflow.com/questions/33866146/neo4j-rest-api-authentication-and-authorization",
+        "https://www.youtube.com/watch?v=6igWn_dckpc",
+        "https://apis.io/providers/neo4j"
+      ]
+    },
+    {
+      "app_id": 67,
+      "name": "Snowflake",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "The fresh evidence confirms that Snowflake supports OAuth, Token (programmatic access tokens / keypair JWT), and other auth methods."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": "unknown",
+        "explanation": "The fresh evidence does not clearly establish the self_serve_status (it mentions free trial accounts, but not explicitly the self-serve plan categorization), confirming the previous unknown verdict."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": true,
+        "explanation": "The fresh evidence confirms that Snowflake ships a managed MCP server that is generally available."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": "ready_today",
+        "explanation": "The fresh evidence confirms the managed MCP server and REST APIs are generally available and ready to use today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "The fresh evidence confirms Snowflake provides managed MCP servers, REST APIs, SQL execution endpoints, and specialized Cortex AI capabilities."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are consistent with the fresh sources.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/snowflake-mcp-vs-api",
+        "https://www.truefoundry.com/blog/snowflake-mcp-server",
+        "https://www.snowflake.com/en/developers/guides/getting-started-with-snowflake-mcp-server",
+        "https://www.activepieces.com/blog/snowflake-api-which-one-to-use-2026-guide"
+      ]
+    },
+    {
+      "app_id": 68,
+      "name": "MongoDB Atlas",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both OAuth (OAuth 2.1 / service accounts / OAuth 2.0 Client Credentials) and API keys (legacy API keys) are supported."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "The fresh evidence does not mention self-serve or pricing tier status."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": true,
+        "explanation": "Fresh evidence confirms MongoDB ships an official MCP server (MongoDB Atlas Managed MCP Server and open source mongodb-mcp-server)."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": "ready_today",
+        "explanation": "With existing MCP servers and documented API methods, building is ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms the Atlas Administration API manages platform components, clusters, projects, and users."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are well-supported by the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/mongodb-atlas-mcp-vs-api",
+        "https://www.mongodb.com/docs/atlas/api/api-authentication",
+        "https://www.mongodb.com/docs/atlas/configure-api-access",
+        "https://www.mongodb.com/docs/atlas/api/atlas-admin-api-ref"
+      ]
+    },
+    {
+      "app_id": 69,
+      "name": "Datadog",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms support for API key, Token, and OAuth2 authentication methods across the MCP server and REST API."
+      },
+      "self_serve_status": {
+        "verdict": "not_addressed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence does not speak to whether Datadog offers a self-serve free plan, trial, or gated pricing model."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that Datadog provides an official remote MCP server generally available since March 2026."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that the Datadog MCP server is generally available and ready to use today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms a comprehensive REST API covering metrics, logs, events, monitors, incidents, and dashboards."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are consistent with the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://www.scalekit.com/blog/datadog-mcp-vs-api",
+        "https://www.truefoundry.com/blog/datadog-mcp-server",
+        "https://www.datadoghq.com/blog/datadog-api-authentication",
+        "https://docs.datadoghq.com/mcp_server"
+      ]
+    },
+    {
+      "app_id": 72,
+      "name": "Airtable",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that Airtable's MCP server supports OAuth and Personal Access Tokens (PATs), matching the pass1 claims."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence explicitly states that the MCP server and API endpoints are available to all users on all plans, including Free."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms the existence of Airtable's official MCP server."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "With an official ready-to-use MCP server and documented configuration instructions, ready_today is confirmed."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "The summary accurately reflects the REST API and official Model Context Protocol server capabilities."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All claims from pass1 were verified against the fresh evidence sources.",
+      "fresh_evidence_urls": [
+        "https://www.verdent.ai/tr/guides/airtable-mcp-server",
+        "https://airtable.com/developers/agents/mcp/getting-started",
+        "https://airia.ai/docs/mcp-servers/popular-mcp-servers/airtable",
+        "https://support.airtable.com/articles/6292134965-getting-started-with-airtable-s-web-api"
+      ]
+    },
+    {
+      "app_id": 89,
+      "name": "Ramp",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that Ramp uses OAuth 2.0 (specifically Ramp OAuth sign-in and Client Credentials / Authorization Code / Refresh Token flows)."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence shows that Ramp is self-serve / free to try and sign up, but full business integrations or apps require an Admin or Business Owner approval flow ('gated_approval' or self-serve signup)."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that Ramp hosts an official MCP server at https://mcp.ramp.com/mcp."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms that both an official MCP server and a well-documented REST Developer API are ready today."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms a comprehensive REST API and MCP toolset covering accounts, bills, transactions, corporate cards, spend management, etc."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All pass1 claims are well-supported by the fresh evidence.",
+      "fresh_evidence_urls": [
+        "https://apis.io/providers/ramp",
+        "https://www.scalekit.com/blog/ramp-mcp-vs-api",
+        "https://apitracker.io/a/ramp",
+        "https://docs.ramp.com/llms-guides/authorization.txt"
+      ]
+    },
+    {
+      "app_id": 92,
+      "name": "Otter AI",
+      "auth_methods": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms both Bearer token authentication via API keys and OAuth authentication for the MCP server."
+      },
+      "self_serve_status": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms self-serve options exist (Basic, Pro, Business) while API access and Enterprise features require contacting an account manager or gated enterprise approval."
+      },
+      "has_existing_mcp": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence confirms Otter provides an official Otter MCP Server."
+      },
+      "buildability_verdict": {
+        "verdict": "confirmed",
+        "corrected_value": null,
+        "explanation": "Fresh evidence shows both an official MCP server and a public API are available, supporting the buildability assessment."
+      },
+      "api_surface_summary": {
+        "verdict": "confirmed",
+        "note": "Fresh evidence confirms public API endpoints for channels, conversations, transcripts, and workspace details, alongside an official MCP server."
+      },
+      "overall_verdict": "pass1_correct",
+      "notes": "All claims in pass1 were well-supported by the fresh documentation from help.otter.ai.",
+      "fresh_evidence_urls": [
+        "https://www.sentra.app/articles/otter-ai-pricing",
+        "https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server",
+        "https://help.otter.ai/hc/en-us/articles/36130822688279-Otter-ai-Public-API",
+        "https://meetgeek.ai/blog/otter-ai-pricing"
+      ]
+    }
+  ],
+  "pass1_field_accuracy_on_determinate_checks": 0.93,
+  "human_check_summary": {
+    "apps_manually_reviewed": 3,
+    "pass1_confirmed_correct_by_human": 1,
+    "errors_caught_by_automated_loop_alone": 1,
+    "errors_automated_loop_missed_but_human_caught": 1
+  },
+  "final_corrections_total": 8
+}

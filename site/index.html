@@ -1,0 +1,682 @@
+<!-- layout: single-column report; sticky section nav; stat tiles -> scaled bar charts -> searchable/filterable table -> agent methodology -> verification case studies -->
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Agent-Ready Audit</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --surface-2: #f2f0eb;
+    --fg: #1c1b1a;
+    --muted: #68645d;
+    --border: #e4e0d8;
+    --accent: #4b3df0;
+    --accent-fg: #ffffff;
+    --good: #1a7a4c;
+    --good-bg: #e6f4ec;
+    --warn: #96650a;
+    --warn-bg: #fbf0dd;
+    --bad: #b23b2e;
+    --bad-bg: #fbe9e6;
+    --neutral-bg: #eeece6;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --display: "Space Grotesk", var(--sans);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f0e13;
+      --surface: #17151d;
+      --surface-2: #1d1b24;
+      --fg: #eeece8;
+      --muted: #9b968d;
+      --border: #2c2935;
+      --accent: #9b90ff;
+      --accent-fg: #15131c;
+      --good: #5fd395;
+      --good-bg: #113322;
+      --warn: #e0ad4f;
+      --warn-bg: #3a2c10;
+      --bad: #ef8577;
+      --bad-bg: #3a1a16;
+      --neutral-bg: #26232d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f0e13;
+    --surface: #17151d;
+    --surface-2: #1d1b24;
+    --fg: #eeece8;
+    --muted: #9b968d;
+    --border: #2c2935;
+    --accent: #9b90ff;
+    --accent-fg: #15131c;
+    --good: #5fd395;
+    --good-bg: #113322;
+    --warn: #e0ad4f;
+    --warn-bg: #3a2c10;
+    --bad: #ef8577;
+    --bad-bg: #3a1a16;
+    --neutral-bg: #26232d;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  h1, h2, h3, .display { font-family: var(--display); font-weight: 600; text-wrap: balance; }
+  code, .mono, .tag, .pill, table { font-family: var(--mono); }
+  a { color: var(--accent); }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  nav.sectionnav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding-block: 10px;
+  }
+  nav.sectionnav .wrap { display: flex; gap: 18px; overflow-x: auto; }
+  nav.sectionnav a {
+    white-space: nowrap; text-decoration: none; color: var(--muted);
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.02em;
+  }
+  nav.sectionnav a:hover { color: var(--fg); }
+
+  header.hero { padding-block: 40px 28px; }
+  header.hero h1 { font-size: clamp(28px, 4.5vw, 42px); margin: 10px 0 14px; line-height: 1.08; }
+  header.hero .lede { max-width: 640px; color: var(--muted); font-size: 16px; }
+  header.hero .lede strong { color: var(--fg); }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+  }
+  .meta-chip {
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px;
+    font-family: var(--mono); font-size: 12px; color: var(--muted); background: var(--surface);
+  }
+
+  section { padding-block: 34px; border-top: 1px solid var(--border); }
+  section > .wrap > h2 { font-size: 22px; margin: 0 0 6px; }
+  section > .wrap > .section-sub { color: var(--muted); max-width: 620px; margin-bottom: 22px; }
+
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .tile {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 16px 14px;
+  }
+  .tile .num { font-family: var(--display); font-size: 30px; font-variant-numeric: tabular-nums; }
+  .tile .label { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+
+  .insight-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: start; margin-top: 28px; }
+  @media (max-width: 760px) { .insight-grid { grid-template-columns: 1fr; } }
+
+  .chart-block + .chart-block { margin-top: 26px; }
+  .chart-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .hbar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; min-width: 0; }
+  .hbar-label { width: 108px; flex: none; font-size: 12.5px; color: var(--muted); text-align: right; }
+  .hbar-track { flex: 1; background: var(--surface-2); border-radius: 5px; height: 16px; min-width: 0; position: relative; }
+  .hbar-fill { background: var(--accent); height: 100%; border-radius: 5px; }
+  .hbar-val { width: 34px; flex: none; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+  .stack-row { margin-bottom: 11px; }
+  .stack-row .stack-label { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 4px; }
+  .stack-row .stack-label span:first-child { color: var(--fg); }
+  .stack-row .stack-label span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .stack-track { display: flex; height: 14px; border-radius: 5px; overflow: hidden; background: var(--surface-2); }
+  .seg-self { background: var(--good); }
+  .seg-gated { background: var(--warn); }
+  .seg-unknown { background: var(--border); }
+
+  .legend { display: flex; gap: 16px; margin-top: 10px; font-size: 12px; color: var(--muted); flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; }
+
+  .prose p { max-width: 640px; }
+  .prose .callout {
+    border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; margin: 18px 0;
+    color: var(--fg);
+  }
+  .prose .callout b { font-family: var(--display); }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+  .filters input[type="search"] {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 7px;
+    padding: 8px 10px; font-size: 13px; color: var(--fg); min-width: 200px; flex: 1;
+  }
+  .filter-pill {
+    border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+    border-radius: 999px; padding: 5px 11px; font-size: 12px; cursor: pointer; font-family: var(--sans);
+  }
+  .filter-pill[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+  .result-count { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+  table.appstable { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 13px; min-width: 760px; }
+  table.appstable thead th {
+    text-align: left; font-family: var(--mono); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.04em; color: var(--muted); padding: 10px 12px; background: var(--surface-2);
+    position: sticky; top: 0;
+    cursor: pointer; white-space: nowrap;
+  }
+  table.appstable tbody tr { border-top: 1px solid var(--border); cursor: pointer; }
+  table.appstable tbody tr:hover { background: var(--surface-2); }
+  table.appstable td { padding: 10px 12px; vertical-align: top; }
+  table.appstable td.name { font-weight: 600; white-space: nowrap; }
+  table.appstable td.cat { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+  .pill { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .pill-good { background: var(--good-bg); color: var(--good); }
+  .pill-warn { background: var(--warn-bg); color: var(--warn); }
+  .pill-bad { background: var(--bad-bg); color: var(--bad); }
+  .pill-neutral { background: var(--neutral-bg); color: var(--muted); }
+
+  tr.detail-row td { background: var(--surface-2); padding: 16px 16px 18px; }
+  .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .detail-field .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 3px; }
+  .detail-field .v { font-size: 13px; }
+  .detail-field .v a { word-break: break-all; }
+  .correction-note {
+    margin-top: 10px; font-size: 12px; background: var(--warn-bg); color: var(--warn);
+    border-radius: 6px; padding: 8px 10px;
+  }
+  [hidden] { display: none !important; }
+
+  .agent-steps { display: grid; gap: 14px; margin-top: 10px; }
+  .agent-step { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; }
+  .agent-step .dot {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--surface-2);
+    display: flex; align-items: center; justify-content: center; font-family: var(--mono);
+    font-size: 12px; color: var(--muted); border: 1px solid var(--border);
+  }
+  .agent-step h4 { margin: 0 0 3px; font-size: 14.5px; }
+  .agent-step p { margin: 0; color: var(--muted); max-width: 580px; font-size: 13.5px; }
+  .agent-step code { font-size: 12px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+
+  .human-callout {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; margin-top: 12px;
+  }
+  .human-callout .tag { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); }
+  .human-callout h4 { margin: 6px 0 6px; font-size: 14.5px; }
+  .human-callout p { margin: 0; font-size: 13.5px; color: var(--muted); }
+
+  .case-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 18px; }
+  .case-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .case-card .case-app { font-family: var(--display); font-size: 16px; margin-bottom: 4px; }
+  .case-card .case-verdict { font-size: 11px; margin-bottom: 10px; }
+  .case-card p { margin: 0 0 8px; font-size: 13px; color: var(--fg); }
+  .case-card p.dim { color: var(--muted); font-size: 12px; }
+
+  .acc-bar-wrap { display: flex; align-items: center; gap: 14px; margin: 18px 0 6px; }
+  .acc-bar-track { flex: 1; height: 20px; border-radius: 6px; overflow: hidden; display: flex; background: var(--surface-2); }
+  .acc-seg-conf { background: var(--good); }
+  .acc-seg-contra { background: var(--bad); }
+  .acc-seg-na { background: var(--border); }
+  .acc-num { font-family: var(--display); font-size: 22px; flex: none; }
+
+  .limits ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; }
+  .limits li { margin-bottom: 6px; }
+
+  footer { padding-block: 30px 50px; }
+  footer .wrap { color: var(--muted); font-size: 12.5px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  footer a { color: var(--fg); }
+
+  ::selection { background: var(--accent); color: var(--accent-fg); }
+</style>
+
+<nav class="sectionnav">
+  <div class="wrap">
+    <a href="#patterns">Patterns</a>
+    <a href="#findings">Findings</a>
+    <a href="#agent">The agent</a>
+    <a href="#verification">Verification</a>
+    <a href="#limits">Limits</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Composio product-ops take-home · AI Product Ops Intern</div>
+    <h1>Most of these 100 apps don't need a sales call. They need a form.</h1>
+    <p class="lede">
+      I researched auth, access, API surface, and MCP status for 100 apps an agent toolkit pipeline
+      might cover — built with an agent, not by hand — then independently re-checked a sample of the
+      answers and <strong>fixed eight of them</strong>. <strong>94%</strong> look buildable today;
+      the real split isn't "has an API" vs "doesn't," it's whether a developer can get credentials
+      themselves or has to ask a human first.
+    </p>
+    <div class="meta-row">
+      <span class="meta-chip">100 apps researched</span>
+      <span class="meta-chip">23 independently re-verified</span>
+      <span class="meta-chip">8 corrections applied</span>
+      <span class="meta-chip">Built on Composio sessions + Tavily + Gemini</span>
+    </div>
+  </div>
+</header>
+
+<section id="patterns">
+  <div class="wrap">
+    <h2>The patterns, up top</h2>
+    <p class="section-sub">Cluster first, rows second. These numbers are from the final, corrected dataset — see <a href="#verification">Verification</a> for how it got corrected.</p>
+
+    <div class="tiles">
+      <div class="tile"><div class="num" id="tile-ready">—</div><div class="label">ready to build today</div></div>
+      <div class="tile"><div class="num" id="tile-selfserve">—</div><div class="label">self-serve, free, no sales call</div></div>
+      <div class="tile"><div class="num" id="tile-oauth">—</div><div class="label">support OAuth2</div></div>
+      <div class="tile"><div class="num" id="tile-mcp">—</div><div class="label">show some MCP server already*</div></div>
+      <div class="tile"><div class="num" id="tile-gated">—</div><div class="label">gated behind plan or approval</div></div>
+      <div class="tile"><div class="num" id="tile-unknown">—</div><div class="label">docs don't say (commercial terms)</div></div>
+    </div>
+
+    <div class="insight-grid">
+      <div>
+        <div class="chart-block">
+          <div class="chart-title">Self-serve vs. gated, by category</div>
+          <div id="chart-category"></div>
+          <div class="legend">
+            <span><i style="background:var(--good)"></i>Self-serve / free</span>
+            <span><i style="background:var(--warn)"></i>Gated (paid plan or approval)</span>
+            <span><i style="background:var(--border)"></i>Unclear from docs</span>
+          </div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-title">Authentication methods in use (apps can use more than one)</div>
+          <div id="chart-auth"></div>
+        </div>
+      </div>
+      <div class="prose">
+        <p><strong>OAuth2 dominates, but it's rarely alone.</strong> 76 of 100 apps support OAuth2 — but
+        56 also offer a plain token and 42 offer a static API key for the single-workspace case. The
+        practical reading: don't build an OAuth-only toolkit. Most vendors expect small integrations to
+        skip OAuth entirely and use a key, reserving OAuth for multi-tenant marketplace apps.</p>
+
+        <div class="callout"><b>Self-serve is the default, not the exception.</b> 65% of apps let a
+        developer get working credentials for free, immediately, with no conversation. Only 20% require
+        either a paid plan or manual approval before you can even get a key.</div>
+
+        <p><strong>Where gating does happen, it's category-shaped.</strong> Productivity &amp; Project
+        Management is 10-for-10 self-serve — these vendors treat free API access as a growth lever.
+        Support &amp; Helpdesk is the most gated category: Zendesk, Pylon, Help Scout, Gorgias and
+        Aircall all put API access behind a paid seat, because for a helpdesk vendor the API itself is
+        a premium feature, not a developer-relations line item.</p>
+
+        <p><strong>The quietest pattern: 13 apps whose docs are fine technically and silent
+        commercially.</strong> Their authentication pages explain token types in detail but never say
+        whether getting one costs money. That's not a blocker — it's unpaid research time: someone has
+        to actually sign up to find out.</p>
+
+        <p class="section-sub" style="margin-top:16px;">* <code>has_existing_mcp</code> counts any MCP
+        server surfaced in search results, official or third-party. Verification caught at least one
+        case (Zendesk) where this overcounted — see <a href="#verification">Verification</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="findings">
+  <div class="wrap">
+    <h2>All 100, one row each</h2>
+    <p class="section-sub">Click a row for gating detail, API surface notes, evidence links, and anything verification changed.</p>
+
+    <div class="filters">
+      <input type="search" id="search" placeholder="Search app name or category…">
+      <button class="filter-pill" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter-pill" data-filter="self_serve">Self-serve</button>
+      <button class="filter-pill" data-filter="gated">Gated</button>
+      <button class="filter-pill" data-filter="unknown">Unclear</button>
+      <button class="filter-pill" data-filter="corrected">Corrected by verification</button>
+    </div>
+    <div class="result-count" id="result-count"></div>
+
+    <div class="table-wrap">
+      <table class="appstable">
+        <thead>
+          <tr>
+            <th data-sort="id">#</th>
+            <th data-sort="name">App</th>
+            <th data-sort="category">Category</th>
+            <th data-sort="selfServe">Access</th>
+            <th data-sort="verdict">Buildable</th>
+            <th data-sort="mcp">MCP</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="agent">
+  <div class="wrap">
+    <h2>The agent that did this</h2>
+    <p class="section-sub">Not a demo wrapper around search — a pipeline, built on Composio's own SDK, that ran unattended across all 100 apps.</p>
+
+    <div class="agent-steps">
+      <div class="agent-step">
+        <div class="dot">1</div>
+        <div>
+          <h4>A Composio session, scoped to one toolkit</h4>
+          <p>A single Tavily connected account (<code>composio.connected_accounts.initiate</code>) wired into a Composio session via the Python SDK (<code>composio.create(toolkits=["tavily"])</code>). Every search and page-extract call for every app goes through Composio's session, not a raw Tavily client — that's the "build it with Composio" part, not just the research.</p>
+        </div>
+      </div>
+      <div class="agent-step">
+        <div class="dot">2</div>
+        <div>
+          <h4>Two searches + two page extracts per app</h4>
+          <p>One broad discovery search ("API documentation authentication"), one commercial-access search ("sign up, pricing, approval, MCP"), both anchored to the app's known domain to avoid name collisions. The top two ranked URLs get a full-page extract; everything else stays as a search snippet.</p>
+        </div>
+      </div>
+      <div class="agent-step">
+        <div class="dot">3</div>
+        <div>
+          <h4>Structured extraction, not free text</h4>
+          <p>Gemini turns the evidence block into a typed record (Pydantic schema: auth methods, self-serve status, API surface, MCP status, buildability verdict, evidence URLs, a self-reported confidence score) — told explicitly not to guess, and to say "unknown" rather than assume a common default.</p>
+        </div>
+      </div>
+      <div class="agent-step">
+        <div class="dot">4</div>
+        <div>
+          <h4>Concurrent, resumable, logged</h4>
+          <p>4 workers in parallel, each app's result flushed to a JSONL file immediately, so a crash loses at most one in-flight app, not the run. 100/100 apps completed after two operational fixes below.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px; font-size:17px;">Where it needed a human</h3>
+    <div class="human-callout">
+      <div class="tag">Caught in the first smoke test</div>
+      <h4>"Sherlock" meant the wrong product</h4>
+      <p>The assignment's "Sherlock" is the OSINT username-search CLI
+      (github.com/sherlock-project/sherlock). An unqualified search for "Sherlock API" instead
+      surfaced an unrelated AI platform of the same name, and the agent confidently wrote up <em>that</em>
+      product's auth model. Fixed by anchoring every query to the app's known domain and telling the
+      model explicitly to check sources against the hint before using them — this is now a standing
+      guard, not a one-off patch.</p>
+    </div>
+    <div class="human-callout">
+      <div class="tag">A real infrastructure wall, not a code bug</div>
+      <h4>Gemini 2.5 Flash's free tier allows 20 requests a day</h4>
+      <p>The first full run died silently after 8 apps with a quota error I hadn't budgeted for — the
+      model's free tier caps at 20 requests <em>per day</em>, not per minute. Switched to
+      <code>gemini-3.5-flash-lite</code> (a per-minute limit, which ordinary retry/backoff handles),
+      and the remaining 92 apps completed in one run.</p>
+    </div>
+    <div class="human-callout">
+      <div class="tag">Found auditing my own verification code</div>
+      <h4>My first verification pass produced corrections I couldn't use</h4>
+      <p>Early "corrected" values came back as free text — <code>"freemium"</code>, <code>"available"</code>
+      — that didn't match the schema's actual enum values, so they could be logged but not safely
+      applied to the dataset. Rewrote the verifier's output as the same typed enums as pass one, which
+      is also what pushed the usable field-accuracy reading from an unreliable 63.5% to a clean 93% on
+      claims the evidence actually addressed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="verification">
+  <div class="wrap">
+    <h2>Verification: two independent loops</h2>
+    <p class="section-sub">Sampling, not spot-checking: 13 lowest-confidence apps plus one random app per category (23 total, weighted toward where errors are likely but still checking for false confidence elsewhere).</p>
+
+    <div class="chart-title" style="margin-top:4px;">115 field-level claims re-checked against independently-gathered evidence</div>
+    <div class="acc-bar-wrap">
+      <div class="acc-bar-track" id="acc-bar"></div>
+      <div class="acc-num" id="acc-num">—</div>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--good)"></i>Confirmed</span>
+      <span><i style="background:var(--bad)"></i>Contradicted → corrected</span>
+      <span><i style="background:var(--border)"></i>Evidence didn't say either way</span>
+    </div>
+
+    <h3 style="margin-top:30px; font-size:17px;">Loop 1: an independent agent re-check</h3>
+    <p class="section-sub" style="margin-bottom:10px;">For each sampled app, a second, differently-worded, independently-gathered search — then Gemini judges pass-1's claims against that fresh evidence only, field by field, required to answer with the same validated enum, never a guess.</p>
+
+    <h3 style="margin-top:26px; font-size:17px;">Loop 2: a human actually reading the pages</h3>
+    <p class="section-sub" style="margin-bottom:10px;">I opened the real source pages for 3 apps by hand. One came back clean, one showed the automated loop catching a real miss, and one showed the automated loop <em>missing</em> something a closer read caught — which is the point of keeping a human loop at all.</p>
+
+    <div class="case-grid" id="case-grid"></div>
+
+    <h3 id="limits" style="margin-top:34px; font-size:17px;">Known limitations</h3>
+    <div class="limits">
+      <ul>
+        <li><strong>MCP status is a first-pass signal, not a confirmed fact.</strong> <code>has_existing_mcp</code>
+        doesn't reliably distinguish an official vendor MCP server from a third-party wrapper, or from a
+        feature that consumes MCP rather than exposing one (Zendesk ships an MCP <em>client</em> for its
+        own workflow builder, not an MCP <em>server</em> for outside agents — both pass 1 and the automated
+        verifier missed that distinction; only the human check caught it).</li>
+        <li><strong>13 "unknown" self-serve verdicts are an honest gap, not a dead end.</strong> They mean
+        the public docs don't state commercial terms — resolving them needs an actual signup attempt, not
+        another search.</li>
+        <li><strong>One search pass per app, not a deep dive.</strong> The agent gives each app roughly
+        the attention a developer would spend before deciding whether to keep investigating — real
+        ambiguous cases (shared product names, multi-product companies) need the kind of targeted,
+        hint-anchored follow-up query this pipeline only applies on the verification sample, not on
+        every app automatically.</li>
+        <li><strong>Verified-correct still means "correct against the evidence gathered,"</strong> not
+        against ground truth no search surfaced. A 93% field-accuracy figure describes agreement with a
+        second independent search, which is the strongest check available without manually opening all
+        100 apps' docs by hand.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Built with Composio sessions (Python SDK) · Tavily search/extract (free tier) · Gemini 3.5 Flash-Lite (free tier)</span>
+    <span>Research + verification pipeline: see source repo</span>
+  </div>
+</footer>
+
+<script>
+(async function () {
+  const data = await fetch('data.json').then(r => r.json());
+  const { rows, patterns, verification } = data;
+
+  // ---------- Stat tiles ----------
+  const pct = (n, total) => Math.round((n / total) * 100);
+  const total = patterns.total;
+  const readyToday = patterns.buildability.ready_today || 0;
+  const selfServe = (patterns.selfServe.self_serve_free || 0) + (patterns.selfServe.self_serve_trial || 0);
+  const oauth = (patterns.authMethods.find(a => a[0] === 'OAuth2') || [0,0])[1];
+  const mcpTrue = patterns.mcp.true;
+  const gated = patterns.gatedBreakdown.total;
+  const unknown = patterns.selfServe.unknown || 0;
+
+  document.getElementById('tile-ready').textContent = pct(readyToday, total) + '%';
+  document.getElementById('tile-selfserve').textContent = pct(selfServe, total) + '%';
+  document.getElementById('tile-oauth').textContent = pct(oauth, total) + '%';
+  document.getElementById('tile-mcp').textContent = pct(mcpTrue, total) + '%';
+  document.getElementById('tile-gated').textContent = pct(gated, total) + '%';
+  document.getElementById('tile-unknown').textContent = pct(unknown, total) + '%';
+
+  // ---------- Auth bar chart ----------
+  const authMax = Math.max(...patterns.authMethods.map(a => a[1]));
+  const authEl = document.getElementById('chart-auth');
+  patterns.authMethods.forEach(([label, count]) => {
+    const row = document.createElement('div');
+    row.className = 'hbar-row';
+    row.innerHTML = `
+      <div class="hbar-label">${label}</div>
+      <div class="hbar-track"><div class="hbar-fill" style="width:${(count/authMax*100).toFixed(1)}%"></div></div>
+      <div class="hbar-val">${count}</div>`;
+    authEl.appendChild(row);
+  });
+
+  // ---------- Category stacked chart ----------
+  const catEl = document.getElementById('chart-category');
+  patterns.categorySelfServe.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'stack-row';
+    const selfPct = c.selfServe / c.total * 100;
+    const gatedPct = c.gated / c.total * 100;
+    const unkPct = c.unknown / c.total * 100;
+    row.innerHTML = `
+      <div class="stack-label"><span>${c.category}</span><span>${c.selfServe}/${c.total} self-serve</span></div>
+      <div class="stack-track">
+        <div class="seg-self" style="width:${selfPct}%"></div>
+        <div class="seg-gated" style="width:${gatedPct}%"></div>
+        <div class="seg-unknown" style="width:${unkPct}%"></div>
+      </div>`;
+    catEl.appendChild(row);
+  });
+
+  // ---------- Accuracy bar ----------
+  const v = verification;
+  const accTrack = document.getElementById('acc-bar');
+  const confP = v.confirmed / v.totalFieldChecks * 100;
+  const contraP = v.contradicted / v.totalFieldChecks * 100;
+  const naP = v.notAddressed / v.totalFieldChecks * 100;
+  accTrack.innerHTML = `
+    <div class="acc-seg-conf" style="width:${confP}%"></div>
+    <div class="acc-seg-contra" style="width:${contraP}%"></div>
+    <div class="acc-seg-na" style="width:${naP}%"></div>`;
+  document.getElementById('acc-num').textContent = Math.round(v.accuracyOnDeterminate * 100) + '%';
+
+  // ---------- Human-check case cards ----------
+  const caseGrid = document.getElementById('case-grid');
+  const verdictPill = (v) => {
+    if (v === 'pass1_correct') return '<span class="pill pill-good">Pass 1 was right</span>';
+    if (v === 'pass1_wrong_caught_by_verification_loop') return '<span class="pill pill-warn">Automated loop caught it</span>';
+    return '<span class="pill pill-bad">Only the human loop caught it</span>';
+  };
+  v.humanCheckCases.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'case-card';
+    card.innerHTML = `
+      <div class="case-app">${c.name}</div>
+      <div class="case-verdict">${verdictPill(c.verdict)}</div>
+      <p>${c.notes}</p>
+      <p class="dim">${c.method}</p>`;
+    caseGrid.appendChild(card);
+  });
+
+  // ---------- Table ----------
+  const tbody = document.getElementById('table-body');
+  const resultCount = document.getElementById('result-count');
+  let activeFilter = 'all';
+  let searchTerm = '';
+  let sortKey = 'id';
+  let sortDir = 1;
+  let expanded = null;
+
+  const selfServePill = (status) => {
+    if (status === 'self_serve_free' || status === 'self_serve_trial')
+      return `<span class="pill pill-good">self-serve</span>`;
+    if (status === 'gated_paid_plan') return `<span class="pill pill-warn">paid plan</span>`;
+    if (status === 'gated_approval') return `<span class="pill pill-warn">approval</span>`;
+    if (status === 'gated_partnership') return `<span class="pill pill-bad">partnership</span>`;
+    return `<span class="pill pill-neutral">unclear</span>`;
+  };
+  const verdictPillTable = (verdict) => {
+    if (verdict === 'ready_today') return `<span class="pill pill-good">ready today</span>`;
+    if (verdict === 'possible_with_workaround') return `<span class="pill pill-warn">workaround</span>`;
+    if (verdict === 'blocked') return `<span class="pill pill-bad">blocked</span>`;
+    return `<span class="pill pill-neutral">unclear</span>`;
+  };
+  const mcpPill = (mcp) => {
+    if (mcp === true) return `<span class="pill pill-good">yes</span>`;
+    if (mcp === false) return `<span class="pill pill-neutral">no</span>`;
+    return `<span class="pill pill-neutral">?</span>`;
+  };
+
+  function matches(row) {
+    if (searchTerm && !(row.name.toLowerCase().includes(searchTerm) || row.category.toLowerCase().includes(searchTerm))) return false;
+    if (activeFilter === 'self_serve') return row.selfServe === 'self_serve_free' || row.selfServe === 'self_serve_trial';
+    if (activeFilter === 'gated') return row.selfServe === 'gated_paid_plan' || row.selfServe === 'gated_approval' || row.selfServe === 'gated_partnership';
+    if (activeFilter === 'unknown') return row.selfServe === 'unknown';
+    if (activeFilter === 'corrected') return row.corrected;
+    return true;
+  }
+
+  function render() {
+    const filtered = rows.filter(matches).sort((a, b) => {
+      const av = a[sortKey], bv = b[sortKey];
+      if (typeof av === 'string') return av.localeCompare(bv) * sortDir;
+      return (av - bv) * sortDir;
+    });
+    resultCount.textContent = `${filtered.length} of ${rows.length} apps`;
+    tbody.innerHTML = '';
+    filtered.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td class="name">${row.name}${row.corrected ? ' <span class="pill pill-warn" title="Corrected by verification">fixed</span>' : ''}</td>
+        <td class="cat">${row.category}</td>
+        <td>${selfServePill(row.selfServe)}</td>
+        <td>${verdictPillTable(row.verdict)}</td>
+        <td>${mcpPill(row.mcp)}</td>`;
+      tr.addEventListener('click', () => toggleDetail(row, tr));
+      tbody.appendChild(tr);
+    });
+  }
+
+  function toggleDetail(row, tr) {
+    const existing = tr.nextElementSibling;
+    if (existing && existing.classList.contains('detail-row')) {
+      existing.remove();
+      return;
+    }
+    document.querySelectorAll('.detail-row').forEach(el => el.remove());
+    const dr = document.createElement('tr');
+    dr.className = 'detail-row';
+    const evidenceLinks = row.evidence.map(u => `<a href="${u}" target="_blank" rel="noopener">${new URL(u).hostname}</a>`).join('<br>');
+    const correctionsHtml = row.correctionNotes.length
+      ? `<div class="correction-note"><strong>Changed by verification:</strong><br>${row.correctionNotes.join('<br>')}</div>`
+      : '';
+    dr.innerHTML = `<td colspan="6">
+      <div class="detail-grid">
+        <div class="detail-field"><div class="k">What it does</div><div class="v">${row.desc}</div></div>
+        <div class="detail-field"><div class="k">Auth methods</div><div class="v">${row.auth.join(', ')}</div></div>
+        <div class="detail-field"><div class="k">Access detail</div><div class="v">${row.gating}</div></div>
+        <div class="detail-field"><div class="k">API surface</div><div class="v">${row.api}</div></div>
+        <div class="detail-field"><div class="k">MCP</div><div class="v">${row.mcpDetail || (row.mcp === false ? 'None found.' : 'Unconfirmed.')}</div></div>
+        <div class="detail-field"><div class="k">Blocker, if any</div><div class="v">${row.blocker || '—'}</div></div>
+        <div class="detail-field"><div class="k">Evidence</div><div class="v">${evidenceLinks || '—'}</div></div>
+        <div class="detail-field"><div class="k">Confidence</div><div class="v">${Math.round(row.confidence*100)}%</div></div>
+      </div>
+      ${correctionsHtml}
+    </td>`;
+    tr.after(dr);
+  }
+
+  document.getElementById('search').addEventListener('input', e => {
+    searchTerm = e.target.value.trim().toLowerCase();
+    render();
+  });
+  document.querySelectorAll('.filter-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      activeFilter = btn.dataset.filter;
+      render();
+    });
+  });
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      sortDir = (sortKey === key) ? -sortDir : 1;
+      sortKey = key;
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

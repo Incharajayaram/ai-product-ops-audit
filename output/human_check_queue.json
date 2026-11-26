@@ -1,0 +1,136 @@
+[
+  {
+    "app_id": 2,
+    "name": "HubSpot",
+    "pass1_claims": {
+      "auth_methods": [
+        "OAuth2",
+        "API key",
+        "Token"
+      ],
+      "self_serve_status": "unknown",
+      "api_surface_summary": "HubSpot offers a broad REST API surface, indicated by mentions of various endpoints and OpenAPI definitions, covering CRM data like contacts, deals, and engagements, with detailed documentation for authentication.",
+      "has_existing_mcp": true,
+      "buildability_verdict": "ready_today"
+    },
+    "evidence_urls": [
+      "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/authentication/overview",
+      "https://developers.hubspot.com/docs/apps/legacy-apps/authentication/intro-to-auth",
+      "https://developers.hubspot.com/ai-tools/mcp",
+      "https://developers.hubspot.com/docs/apps/developer-platform/build-apps/integrate-with-the-remote-hubspot-mcp-server",
+      "https://www.postman.com/hubspot/hubspot-public-api-workspace/overview",
+      "https://apis.io/security/hubspot/hubspot-authentication"
+    ]
+  },
+  {
+    "app_id": 6,
+    "name": "Podio",
+    "pass1_claims": {
+      "auth_methods": [
+        "OAuth2"
+      ],
+      "self_serve_status": "self_serve_free",
+      "api_surface_summary": "The API uses OAuth 2.0 with multiple flows (server-side, client-side, username & password, and app authentication), but the provided evidence does not detail the exact endpoint count or request structure.",
+      "has_existing_mcp": null,
+      "buildability_verdict": "ready_today"
+    },
+    "evidence_urls": [
+      "https://developers.podio.com/authentication",
+      "https://developers.podio.com/authentication/app_auth",
+      "https://developers.podio.com/authentication/username_password",
+      "https://developers.podio.com/authentication/server_side",
+      "https://developers.podio.com/api-key",
+      "https://public-api.org/api/428/podio"
+    ]
+  },
+  {
+    "app_id": 9,
+    "name": "Copper",
+    "pass1_claims": {
+      "auth_methods": [
+        "OAuth2",
+        "API key"
+      ],
+      "self_serve_status": "unknown",
+      "api_surface_summary": "Copper provides a REST API supporting CRUD-style data objects like People, Companies, Leads, Opportunities, Projects, and Activities with paginated and incremental synchronization.",
+      "has_existing_mcp": true,
+      "buildability_verdict": "ready_today"
+    },
+    "evidence_urls": [
+      "https://developer.copper.com/introduction/authentication.html",
+      "https://www.copper.com/mcp",
+      "https://developer.copper.co/api-reference/authentication",
+      "https://frontal.so/gtm-apis/crm-apis/copper-api-review",
+      "https://endgrate.com/blog/how-to-get-users-with-the-copper-api-in-python",
+      "https://www.lonti.com/integrations/copper-crm"
+    ]
+  },
+  {
+    "app_id": 11,
+    "name": "Zendesk",
+    "pass1_claims": {
+      "auth_methods": [
+        "OAuth2",
+        "API key",
+        "Basic",
+        "Token"
+      ],
+      "self_serve_status": "unknown",
+      "api_surface_summary": "Zendesk provides a v2 API that is SSL-only, supporting endpoints such as users and ticketing through OAuth access tokens and API tokens.",
+      "has_existing_mcp": true,
+      "buildability_verdict": "ready_today"
+    },
+    "evidence_urls": [
+      "https://developer.zendesk.com/documentation/api-basics/authentication/using-the-api-with-2-factor-authentication-enabled",
+      "https://developer.zendesk.com/api-reference/introduction/security-and-auth",
+      "https://support.zendesk.com/hc/en-us/articles/4408831452954-How-can-I-authenticate-API-requests",
+      "https://cxsupporthub.zendesk.com/hc/en-us/articles/22532629471900-How-can-I-authenticate-API-requests",
+      "https://www.zendesk.com/marketplace/apps/support/1191848/mcp-server",
+      "https://apis.io/security/zendesk/zendesk-authentication"
+    ]
+  },
+  {
+    "app_id": 12,
+    "name": "Intercom",
+    "pass1_claims": {
+      "auth_methods": [
+        "OAuth2",
+        "Token"
+      ],
+      "self_serve_status": "self_serve_free",
+      "api_surface_summary": "Intercom provides a documented REST API supporting contacts, companies, conversations, and articles, alongside an official MCP server with 16 tools.",
+      "has_existing_mcp": true,
+      "buildability_verdict": "ready_today"
+    },
+    "evidence_urls": [
+      "https://developers.intercom.com/docs/build-an-integration/learn-more/authentication",
+      "https://developers.intercom.com/docs/guides/mcp",
+      "https://www.intercom.com/help/en/articles/9071694-intercom-developer-faqs",
+      "https://apitracker.io/a/intercom",
+      "https://www.youtube.com/watch?v=39ve8pwgfow",
+      "https://www.postman.com/api-reference-library/intercom/collection/3seaulo/intercom-api"
+    ]
+  },
+  {
+    "app_id": 14,
+    "name": "Front",
+    "pass1_claims": {
+      "auth_methods": [
+        "OAuth2",
+        "API key"
+      ],
+      "self_serve_status": "unknown",
+      "api_surface_summary": "Front provides a comprehensive Core API that covers entities from Contacts to Comments, with documented rate limiting and endpoints accessible via Bearer tokens.",
+      "has_existing_mcp": true,
+      "buildability_verdict": "ready_today"
+    },
+    "evidence_urls": [
+      "https://community.front.com/api-news-updates-40/the-front-mcp-server-is-here-beta-3712",
+      "https://community.front.com/api-news-updates-40",
+      "https://community.front.com/developer-discussion-39/is-anyone-working-on-creating-an-mcp-server-for-frontapp-2309",
+      "https://community.front.com/developers-36/index2.html",
+      "https://dev.frontapp.com/reference/introduction",
+      "https://dev.frontapp.com/docs/authentication"
+    ]
+  }
+]
