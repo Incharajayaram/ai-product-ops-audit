@@ -24,7 +24,8 @@ output/
   human_check_results.json   3 manually hand-checked apps
   final_results.json         pass-1 with verification corrections applied
 site/
-  index.html, data.json      the deployed case-study page
+  index.html                 the case-study page (fully self-contained: data is inlined,
+                              works standalone with no server — this is the submission file)
 ```
 
 ## How it works
