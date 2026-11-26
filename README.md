@@ -3,7 +3,7 @@
 Composio's AI Product Ops Intern take-home: research 100 apps' auth/API/MCP buildability with
 an agent, cluster the patterns, and verify the results.
 
-**Live case study:** see the deployment link shared with the submission.
+**Live case study:** https://agent-ready-audit-ewzu.onrender.com/
 
 ## What's here
 
